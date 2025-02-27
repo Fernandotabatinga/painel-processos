@@ -762,4 +762,314 @@
                             <span class="priority-badge badge-baixa">Baixa</span>
                         </div>
                         <div class="card-title">Cadastro Cliente Novo Empresa QRT</div>
+                        <div class="progress-bar"><div class="progress-bar">
+                            <div class="progress-fill" style="width: 20%; background-color: var(--baixa-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">VL</div>
+                                <span>Vanessa L.</span>
+                            </div>
+                            <span>Prazo: 7 dias</span>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="11" data-prioridade="baixa" data-departamento="fiscal">
+                        <div class="card-indicator" style="background-color: var(--baixa-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Fiscal</span>
+                            <span class="priority-badge badge-baixa">Baixa</span>
+                        </div>
+                        <div class="card-title">Atualização Cadastral Empresa UVX</div>
                         <div class="progress-bar">
+                            <div class="progress-fill" style="width: 15%; background-color: var(--baixa-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">FC</div>
+                                <span>Felipe C.</span>
+                            </div>
+                            <span>Prazo: 10 dias</span>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="12" data-prioridade="baixa" data-departamento="dp">
+                        <div class="card-indicator" style="background-color: var(--baixa-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">DP</span>
+                            <span class="priority-badge badge-baixa">Baixa</span>
+                        </div>
+                        <div class="card-title">Atualização PPRA/PCMSO Empresa YZA</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 10%; background-color: var(--baixa-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">TG</div>
+                                <span>Thiago G.</span>
+                            </div>
+                            <span>Prazo: 15 dias</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna: Concluído -->
+            <div class="kanban-column concluido">
+                <div class="column-header">
+                    <h4><i class="fas fa-check-double"></i> CONCLUÍDO</h4>
+                    <div class="column-count">2</div>
+                </div>
+                <div class="kanban-cards scrollbar-style">
+                    <div class="kanban-card" data-id="13" data-prioridade="concluido" data-departamento="contabil">
+                        <div class="card-indicator" style="background-color: var(--concluido-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Contábil</span>
+                            <span class="priority-badge badge-concluido">Concluído</span>
+                        </div>
+                        <div class="card-title">Fechamento Mensal Empresa BCD</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%; background-color: var(--concluido-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">JM</div>
+                                <span>João M.</span>
+                            </div>
+                            <span>Concluído: Hoje</span>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="14" data-prioridade="concluido" data-departamento="fiscal">
+                        <div class="card-indicator" style="background-color: var(--concluido-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Fiscal</span>
+                            <span class="priority-badge badge-concluido">Concluído</span>
+                        </div>
+                        <div class="card-title">Entrega SPED Empresa EFG</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%; background-color: var(--concluido-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">AM</div>
+                                <span>Ana M.</span>
+                            </div>
+                            <span>Concluído: Ontem</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 ITLContabilidade - Painel de Processos v1.0 - Desenvolvido por Equipe de TI</p>
+        </div>
+    </div>
+
+    <!-- Modal para Nova Solicitação -->
+    <div id="modal-solicitacao" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="fecharModal('modal-solicitacao')">&times;</span>
+            <h4 class="mb-3">Nova Solicitação</h4>
+            <form id="form-solicitacao">
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="departamento">Departamento</label>
+                    <select id="departamento" class="form-control" required>
+                        <option value="">Selecione um departamento</option>
+                        <option value="contabil">Contábil</option>
+                        <option value="fiscal">Fiscal</option>
+                        <option value="dp">Departamento Pessoal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prioridade">Prioridade</label>
+                    <select id="prioridade" class="form-control" required>
+                        <option value="">Selecione uma prioridade</option>
+                        <option value="urgente">Urgente</option>
+                        <option value="alta">Alta</option>
+                        <option value="media">Média</option>
+                        <option value="baixa">Baixa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="responsavel">Responsável</label>
+                    <select id="responsavel" class="form-control" required>
+                        <option value="">Selecione um responsável</option>
+                        <option value="JM">João M.</option>
+                        <option value="AM">Ana M.</option>
+                        <option value="CP">Carlos P.</option>
+                        <option value="RF">Roberto F.</option>
+                        <option value="MT">Maria T.</option>
+                        <option value="LM">Lucia M.</option>
+                        <option value="PS">Paulo S.</option>
+                        <option value="AS">Amanda S.</option>
+                        <option value="RO">Ricardo O.</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prazo">Prazo</label>
+                    <input type="date" id="prazo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary me-2" onclick="fecharModal('modal-solicitacao')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Atualizar data e hora em tempo real
+        function atualizarDataHora() {
+            const agora = new Date();
+            const opcoes = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const dataFormatada = agora.toLocaleDateString('pt-BR', opcoes);
+            document.getElementById('hora-data').innerHTML = `<i class="fas fa-calendar-alt"></i> ${dataFormatada}`;
+        }
+        
+        // Simular informação de clima
+        function simularClima() {
+            const climas = [
+                '<i class="fas fa-sun"></i> Ensolarado, 28°C',
+                '<i class="fas fa-cloud-sun"></i> Parcialmente nublado, 24°C',
+                '<i class="fas fa-cloud"></i> Nublado, 22°C',
+                '<i class="fas fa-cloud-rain"></i> Chuvoso, 20°C'
+            ];
+            const climaAleatorio = climas[Math.floor(Math.random() * climas.length)];
+            document.getElementById('clima').innerHTML = climaAleatorio;
+        }
+        
+        // Função para atualizar contadores
+        function atualizarContadores() {
+            const cardsUrgente = document.querySelectorAll('.kanban-card[data-prioridade="urgente"]');
+            const cardsAlta = document.querySelectorAll('.kanban-card[data-prioridade="alta"]');
+            const cardsMedia = document.querySelectorAll('.kanban-card[data-prioridade="media"]');
+            const cardsConcluido = document.querySelectorAll('.kanban-card[data-prioridade="concluido"]');
+            
+            document.getElementById('contador-urgente').textContent = cardsUrgente.length;
+            document.getElementById('contador-alta').textContent = cardsAlta.length;
+            document.getElementById('contador-media').textContent = cardsMedia.length;
+            document.getElementById('contador-concluido').textContent = cardsConcluido.length;
+            
+            // Atualizar contadores nas colunas
+            document.querySelector('.urgente .column-count').textContent = cardsUrgente.length;
+            document.querySelector('.alta .column-count').textContent = cardsAlta.length;
+            document.querySelector('.media .column-count').textContent = cardsMedia.length;
+            document.querySelector('.concluido .column-count').textContent = cardsConcluido.length;
+            document.querySelector('.baixa .column-count').textContent = document.querySelectorAll('.kanban-card[data-prioridade="baixa"]').length;
+        }
+        
+        // Função para abrir modal
+        function abrirModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            
+            // Se for o modal de nova solicitação, definir data mínima como hoje
+            if (modalId === 'modal-solicitacao') {
+                const hoje = new Date().toISOString().split('T')[0];
+                document.getElementById('prazo').min = hoje;
+            }
+        }
+        
+        // Função para fechar modal
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Filtrar cards por responsável/departamento
+        function filtrarPorResponsavel(departamento) {
+            const cards = document.querySelectorAll('.kanban-card');
+            
+            if (departamento === 'todos') {
+                cards.forEach(card => {
+                    card.style.display = 'block';
+                });
+            } else {
+                cards.forEach(card => {
+                    if (card.dataset.departamento === departamento) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+        
+        // Filtrar cards por prioridade
+        function filtrarPorPrioridade(prioridade) {
+            const cards = document.querySelectorAll('.kanban-card');
+            
+            if (prioridade === 'todas') {
+                cards.forEach(card => {
+                    card.style.display = 'block';
+                });
+            } else {
+                cards.forEach(card => {
+                    if (card.dataset.prioridade === prioridade) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Atualizar data e hora
+            atualizarDataHora();
+            setInterval(atualizarDataHora, 60000); // Atualizar a cada minuto
+            
+            // Simular clima
+            simularClima();
+            
+            // Atualizar contadores
+            atualizarContadores();
+            
+            // Fechar modal quando clicar fora dele
+            window.onclick = function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                }
+            };
+            
+            // Manipular formulário de nova solicitação
+            document.getElementById('form-solicitacao').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Aqui você implementaria a lógica para adicionar a nova solicitação
+                // Por enquanto vamos apenas fechar o modal
+                alert('Solicitação registrada com sucesso!');
+                fecharModal('modal-solicitacao');
+            });
+            
+            // Tornar os cards clicáveis para abrir detalhes
+            document.querySelectorAll('.kanban-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    // Aqui você implementaria a abertura de um modal de detalhes
+                    alert('Detalhes do card: ' + this.querySelector('.card-title').textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

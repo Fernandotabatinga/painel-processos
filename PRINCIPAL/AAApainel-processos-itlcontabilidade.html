@@ -6,7 +6,9 @@
     <title>PAINEL DE PROCESSOS ITLCONTABILIDADE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style2.css">
+    <script src="script2.js" defer></script>
+    <link rel="stylesheet" href="style3.css">
+   
 </head>
 <body>
     <div class="main-container">
@@ -17,6 +19,9 @@
                 <h2 class="m-0">PAINEL DE PROCESSOS</h2>
             </div>
             <div class="d-flex">
+                <button class="btn btn-outline-light me-2" onclick="abrirModal('sites-modal')">
+                    <i class="fas fa-link"></i> Links Úteis
+                </button>
                 <button class="btn btn-primary me-2" onclick="abrirModal('modal-solicitacao')">
                     <i class="fas fa-plus"></i> Nova Solicitação
                 </button>
@@ -46,7 +51,7 @@
                 <i class="fas fa-calendar-alt"></i> Carregando data...
             </div>
             <div class="widget" id="clima">
-                <i class="fas fa-cloud-sun"></i> Carregando clima...
+                <i class="fas fa-cloud-sun"></i> Teresina-PI, carregando...
             </div>
             
             <!-- Indicadores de performance -->
@@ -122,7 +127,7 @@
                     <h4><i class="fas fa-fire"></i> URGENTE</h4>
                     <div class="column-count">3</div>
                 </div>
-                <div class="kanban-cards scrollbar-style">
+                <div class="kanban-cards scrollbar-style" id="coluna-urgente">
                     <div class="kanban-card" data-id="1" data-prioridade="urgente" data-departamento="contabil">
                         <div class="card-indicator" style="background-color: var(--urgente-color);"></div>
                         <div class="card-header">
@@ -134,11 +139,12 @@
                             <div class="progress-fill" style="width: 20%; background-color: var(--urgente-color);"></div>
                         </div>
                         <div class="card-meta">
-                            <div class="card-assigned">
-                                <div class="card-avatar">JM</div>
-                                <span>João M.</span>
-                            </div>
+                            <span class="responsible-name">João M.</span>
                             <span>Prazo: Hoje</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(1)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(1)"><i class="fas fa-check"></i> Concluir</button>
                         </div>
                     </div>
 
@@ -153,11 +159,12 @@
                             <div class="progress-fill" style="width: 30%; background-color: var(--urgente-color);"></div>
                         </div>
                         <div class="card-meta">
-                            <div class="card-assigned">
-                                <div class="card-avatar">AM</div>
-                                <span>Ana M.</span>
-                            </div>
+                            <span class="responsible-name">Ana M.</span>
                             <span>Prazo: Hoje</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(2)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(2)"><i class="fas fa-check"></i> Concluir</button>
                         </div>
                     </div>
 
@@ -172,11 +179,12 @@
                             <div class="progress-fill" style="width: 15%; background-color: var(--urgente-color);"></div>
                         </div>
                         <div class="card-meta">
-                            <div class="card-assigned">
-                                <div class="card-avatar">CP</div>
-                                <span>Carlos P.</span>
-                            </div>
+                            <span class="responsible-name">Carlos P.</span>
                             <span>Prazo: Hoje</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(3)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(3)"><i class="fas fa-check"></i> Concluir</button>
                         </div>
                     </div>
                 </div>
@@ -188,7 +196,7 @@
                     <h4><i class="fas fa-exclamation-triangle"></i> ALTA</h4>
                     <div class="column-count">3</div>
                 </div>
-                <div class="kanban-cards scrollbar-style">
+                <div class="kanban-cards scrollbar-style" id="coluna-alta">
                     <div class="kanban-card" data-id="4" data-prioridade="alta" data-departamento="contabil">
                         <div class="card-indicator" style="background-color: var(--alta-color);"></div>
                         <div class="card-header">
@@ -200,11 +208,12 @@
                             <div class="progress-fill" style="width: 50%; background-color: var(--alta-color);"></div>
                         </div>
                         <div class="card-meta">
-                            <div class="card-assigned">
-                                <div class="card-avatar">RF</div>
-                                <span>Roberto F.</span>
-                            </div>
+                            <span class="responsible-name">Roberto F.</span>
                             <span>Prazo: Amanhã</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(4)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(4)"><i class="fas fa-check"></i> Concluir</button>
                         </div>
                     </div>
 
@@ -219,11 +228,12 @@
                             <div class="progress-fill" style="width: 65%; background-color: var(--alta-color);"></div>
                         </div>
                         <div class="card-meta">
-                            <div class="card-assigned">
-                                <div class="card-avatar">MT</div>
-                                <span>Maria T.</span>
-                            </div>
+                            <span class="responsible-name">Maria T.</span>
                             <span>Prazo: Amanhã</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(5)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(5)"><i class="fas fa-check"></i> Concluir</button>
                         </div>
                     </div>
 
@@ -238,11 +248,12 @@
                             <div class="progress-fill" style="width: 40%; background-color: var(--alta-color);"></div>
                         </div>
                         <div class="card-meta">
-                            <div class="card-assigned">
-                                <div class="card-avatar">LM</div>
-                                <span>Lucia M.</span>
-                            </div>
+                            <span class="responsible-name">Lucia M.</span>
                             <span>Prazo: Amanhã</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(6)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(6)"><i class="fas fa-check"></i> Concluir</button>
                         </div>
                     </div>
                 </div>
@@ -254,7 +265,7 @@
                     <h4><i class="fas fa-hourglass-half"></i> MÉDIA</h4>
                     <div class="column-count">3</div>
                 </div>
-                <div class="kanban-cards scrollbar-style">
+                <div class="kanban-cards scrollbar-style" id="coluna-media">
                     <div class="kanban-card" data-id="7" data-prioridade="media" data-departamento="contabil">
                         <div class="card-indicator" style="background-color: var(--media-color);"></div>
                         <div class="card-header">
@@ -266,54 +277,36 @@
                             <div class="progress-fill" style="width: 80%; background-color: var(--media-color);"></div>
                         </div>
                         <div class="card-meta">
-                            <div class="card-assigned">
-                                <div class="card-avatar">PS</div>
-                                <span>Paulo S.</span>
-                            </div>
+                            <span class="responsible-name">Paulo S.</span>
                             <span>Prazo: 3 dias</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(7)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(7)"><i class="fas fa-check"></i> Concluir</button>
                         </div>
                     </div>
 
-                    <div class="kanban-card" data-id="8" data-prioridade="media" data-departamento="fiscal">
+                    <div class="kanban-card" data-id="8" data-prioridade="media" data-departamento="fiscal"><div class="kanban-card" data-id="8" data-prioridade="media" data-departamento="fiscal">
                         <div class="card-indicator" style="background-color: var(--media-color);"></div>
                         <div class="card-header">
                             <span class="card-tag">Fiscal</span>
                             <span class="priority-badge badge-media">Média</span>
                         </div>
-                        <div class="card-title">Conferência Notas Fiscais Empresa PQR</div>
+                        <div class="card-title">Revisão Tributária Empresa PQR</div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: 75%; background-color: var(--media-color);"></div>
                         </div>
                         <div class="card-meta">
-                            <div class="card-assigned">
-                                <div class="card-avatar">AS</div>
-                                <span>Amanda S.</span>
-                            </div>
-                            <span>Prazo: 4 dias</span>
+                            <span class="responsible-name">Isadora T.</span>
+                            <span>Prazo: 3 dias</span>
                         </div>
-                    </div>
-
-                    <div class="kanban-card" data-id="9" data-prioridade="media" data-departamento="dp">
-                        <div class="card-indicator" style="background-color: var(--media-color);"></div>
-                        <div class="card-header">
-                            <span class="card-tag">DP</span>
-                            <span class="priority-badge badge-media">Média</span>
-                        </div>
-                        <div class="card-title">Férias Coletivas Empresa STU</div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 60%; background-color: var(--media-color);"></div>
-                        </div>
-                        <div class="card-meta">
-                            <div class="card-assigned">
-                                <div class="card-avatar">RO</div>
-                                <span>Ricardo O.</span>
-                            </div>
-                            <span>Prazo: 5 dias</span>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(8)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(8)"><i class="fas fa-check"></i> Concluir</button>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             <!-- Coluna: Concluído -->
             <div class="kanban-column baixa">
@@ -447,7 +440,8 @@
             
             atualizarHoraData();
             
-    
+            // Simular dados do clima
+            document.getElementById('clima').innerHTML = '<i class="fas fa-sun"></i> Teresina-PI, 32°C';
             
             // Inicializar contadores
             atualizarContadores();
@@ -660,4 +654,3 @@
     </script>
 </body>
 </html>
-                            

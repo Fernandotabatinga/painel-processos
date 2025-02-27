@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAINEL DE PROCESSOS ITLCONTABILIDADE</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --urgente-color: #e74c3c;
+            --alta-color: #f39c12;
+            --media-color: #f1c40f;
+            --baixa-color: #2ecc71;
+            --concluido-color: #1abc9c;
+            --card-border-radius: 8px;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .main-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+
+        .header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px;
+            border-radius: var(--card-border-radius);
+            margin-bottom: 15px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .logo-img {
+            max-height: 50px;
+            margin-right: 15px;
+        }
+
+        .widgets-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .widget {
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+        }
+
+        .indicator-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .indicator-label {
+            font-size: 0.8rem;
+        }
+
+        .link-buttons a {
+            margin: 0 5px;
+            padding: 8px 12px;
+            border-radius: var(--card-border-radius);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .link-buttons a i {
+            margin-right: 5px;
+        }
+
+        .kanban-container {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .kanban-column {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            background-color: #f1f3f5;
+            border-radius: var(--card-border-radius);
+            padding: 10px;
+        }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+            color: white;
+            font-weight: bold;
+        }
+
+        .column-header h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .column-count {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .kanban-cards {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .kanban-card {
+            background-color: white;
+            border-radius: var(--card-border-radius);
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+
+        .kanban-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .card-action {
+            background: none;
+            border: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .card-action:hover {
+            color: var(--primary-color);
+        }
+
+        .card-indicator {
+            width: 40px;
+            height: 4px;
+            border-radius: 2px;
+            margin-bottom: 5px;
+        }
+
+        .card-tag {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background-color: #e9ecef;
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+
+        .priority-badge {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: white;
+            margin-left: 5px;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background-color: #e9ecef;
+            border-radius: 2px;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+
+        .urgente .column-header,
+        .badge-urgente {
+            background-color: var(--urgente-color);
+        }
+
+        .alta .column-header,
+        .badge-alta {
+            background-color: var(--alta-color);
+        }
+
+        .media .column-header,
+        .badge-media {
+            background-color: var(--media-color);
+            color: #333;
+        }
+
+        .baixa .column-header,
+        .badge-baixa {
+            background-color: var(--baixa-color);
+        }
+
+        .concluido .column-header,
+        .badge-concluido {
+            background-color: var(--concluido-color);
+        }
+
+        .status-widget {
+            display: flex;
+            justify-content: space-between;
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: var(--card-border-radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: var(--card-border-radius);
+            margin-top: 15px;
+            font-size: 0.8rem;
+        }
+
+        .card-assigned {
+            display: flex;
+            align-items: center;
+        }
+
+        .card-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            margin-right: 5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+
+        .btn-action {
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: var(--card-border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background-color: #2980b9;
+        }
+
+        /* Personalização para visualização em TV */
+        @media (min-width: 1200px) {
+            .kanban-column {
+                min-width: 280px;
+            }
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Estilos para o modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: var(--card-border-radius);
+            width: 60%;
+            max-width: 600px;
+            box-shadow: var(--card-shadow);
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .modal-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .scrollbar-style::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollbar-style::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .scrollbar-style::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        .scrollbar-style::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header com logo e título -->
+        <div class="header d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="/api/placeholder/200/50" alt="Logo ITLContabilidade" class="logo-img">
+                <h2 class="m-0">PAINEL DE PROCESSOS</h2>
+            </div>
+            <div class="d-flex">
+                <button class="btn btn-primary me-2" onclick="abrirModal('modal-solicitacao')">
+                    <i class="fas fa-plus"></i> Nova Solicitação
+                </button>
+                <div class="dropdown">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="filtroDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="filtroDropdown">
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('todos')">Todos os processos</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('contabil')">Departamento Contábil</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('fiscal')">Departamento Fiscal</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('dp')">Departamento Pessoal</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('todas')">Todas as prioridades</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('urgente')">Urgente</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('alta')">Alta</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('media')">Média</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('baixa')">Baixa</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra de widgets e indicadores -->
+        <div class="widgets-bar">
+            <div class="widget" id="hora-data">
+                <i class="fas fa-calendar-alt"></i> Carregando data...
+            </div>
+            <div class="widget" id="clima">
+                <i class="fas fa-cloud-sun"></i> Carregando clima...
+            </div>
+            
+            <!-- Indicadores de performance -->
+            <div class="d-flex gap-2">
+                <div class="indicator" style="background-color: var(--urgente-color);">
+                    <div class="indicator-value" id="contador-urgente">0</div>
+                    <div class="indicator-label">URGENTES</div>
+                </div>
+                <div class="indicator" style="background-color: var(--alta-color);">
+                    <div class="indicator-value" id="contador-alta">0</div>
+                    <div class="indicator-label">ALTA</div>
+                </div>
+                <div class="indicator" style="background-color: var(--media-color);">
+                    <div class="indicator-value" id="contador-media">0</div>
+                    <div class="indicator-label">MÉDIA</div>
+                </div>
+                <div class="indicator" style="background-color: var(--concluido-color);">
+                    <div class="indicator-value" id="contador-concluido">0</div>
+                    <div class="indicator-label">CONCLUÍDOS</div>
+                </div>
+            </div>
+
+            <!-- Links rápidos -->
+            <div class="link-buttons">
+                <a href="#" style="background-color: #0d6efd;">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+                <a href="#" style="background-color: #198754;">
+                    <i class="fas fa-globe"></i> Site ITL
+                </a>
+                <a href="#" style="background-color: #fd7e14;">
+                    <i class="fas fa-tasks"></i> Asana
+                </a>
+                <a href="#" style="background-color: #20c997;">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <!-- Status e progresso do dia -->
+        <div class="status-widget">
+            <div class="d-flex flex-column">
+                <span><strong>Solicitações Hoje:</strong> <span id="solicitacoes-hoje">12</span></span>
+                <div class="progress-bar" style="width: 150px;">
+                    <div class="progress-fill" style="width: 60%;"></div>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <span><strong>Concluídas Hoje:</strong> <span id="concluidas-hoje">5</span></span>
+                <div class="progress-bar" style="width: 150px;">
+                    <div class="progress-fill" style="width: 40%;"></div>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <span><strong>Tempo Médio Resolução:</strong> <span id="tempo-medio">1.5 dias</span></span>
+                <div class="progress-bar" style="width: 150px;">
+                    <div class="progress-fill" style="width: 70%;"></div>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <span><strong>Equipe mais ativa:</strong> <span id="equipe-ativa">Contábil</span></span>
+                <div class="progress-bar" style="width: 150px;">
+                    <div class="progress-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quadro Kanban -->
+        <div class="kanban-container">
+            <!-- Coluna: A Fazer -->
+            <div class="kanban-column urgente">
+                <div class="column-header">
+                    <h4><i class="fas fa-fire"></i> URGENTE</h4>
+                    <div class="column-count">3</div>
+                </div>
+                <div class="kanban-cards scrollbar-style">
+                    <div class="kanban-card" data-id="1" data-prioridade="urgente" data-departamento="contabil">
+                        <div class="card-indicator" style="background-color: var(--urgente-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Contábil</span>
+                            <span class="priority-badge badge-urgente">Urgente</span>
+                        </div>
+                        <div class="card-title">Conciliação Bancária Empresa ABC</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 20%; background-color: var(--urgente-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">JM</div>
+                                <span>João M.</span>
+                            </div>
+                            <span>Prazo: Hoje</span>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="2" data-prioridade="urgente" data-departamento="fiscal">
+                        <div class="card-indicator" style="background-color: var(--urgente-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Fiscal</span>
+                            <span class="priority-badge badge-urgente">Urgente</span>
+                        </div>
+                        <div class="card-title">Retificação DARF Empresa XYZ</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%; background-color: var(--urgente-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">AM</div>
+                                <span>Ana M.</span>
+                            </div>
+                            <span>Prazo: Hoje</span>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="3" data-prioridade="urgente" data-departamento="dp">
+                        <div class="card-indicator" style="background-color: var(--urgente-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">DP</span>
+                            <span class="priority-badge badge-urgente">Urgente</span>
+                        </div>
+                        <div class="card-title">Rescisão Funcionário Empresa 123</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 15%; background-color: var(--urgente-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">CP</div>
+                                <span>Carlos P.</span>
+                            </div>
+                            <span>Prazo: Hoje</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna: Em Progresso -->
+            <div class="kanban-column alta">
+                <div class="column-header">
+                    <h4><i class="fas fa-exclamation-triangle"></i> ALTA</h4>
+                    <div class="column-count">3</div>
+                </div>
+                <div class="kanban-cards scrollbar-style">
+                    <div class="kanban-card" data-id="4" data-prioridade="alta" data-departamento="contabil">
+                        <div class="card-indicator" style="background-color: var(--alta-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Contábil</span>
+                            <span class="priority-badge badge-alta">Alta</span>
+                        </div>
+                        <div class="card-title">Balancete Trimestral Empresa DEF</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 50%; background-color: var(--alta-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">RF</div>
+                                <span>Roberto F.</span>
+                            </div>
+                            <span>Prazo: Amanhã</span>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="5" data-prioridade="alta" data-departamento="fiscal">
+                        <div class="card-indicator" style="background-color: var(--alta-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Fiscal</span>
+                            <span class="priority-badge badge-alta">Alta</span>
+                        </div>
+                        <div class="card-title">Apuração ICMS Empresa GHI</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%; background-color: var(--alta-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">MT</div>
+                                <span>Maria T.</span>
+                            </div>
+                            <span>Prazo: Amanhã</span>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="6" data-prioridade="alta" data-departamento="dp">
+                        <div class="card-indicator" style="background-color: var(--alta-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">DP</span>
+                            <span class="priority-badge badge-alta">Alta</span>
+                        </div>
+                        <div class="card-title">Folha de Pagamento Empresa JKL</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%; background-color: var(--alta-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">LM</div>
+                                <span>Lucia M.</span>
+                            </div>
+                            <span>Prazo: Amanhã</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna: Em Revisão -->
+            <div class="kanban-column media">
+                <div class="column-header">
+                    <h4><i class="fas fa-hourglass-half"></i> MÉDIA</h4>
+                    <div class="column-count">3</div>
+                </div>
+                <div class="kanban-cards scrollbar-style">
+                    <div class="kanban-card" data-id="7" data-prioridade="media" data-departamento="contabil">
+                        <div class="card-indicator" style="background-color: var(--media-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Contábil</span>
+                            <span class="priority-badge badge-media">Média</span>
+                        </div>
+                        <div class="card-title">Relatório Gerencial Empresa MNO</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%; background-color: var(--media-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">PS</div>
+                                <span>Paulo S.</span>
+                            </div>
+                            <span>Prazo: 3 dias</span>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="8" data-prioridade="media" data-departamento="fiscal">
+                        <div class="card-indicator" style="background-color: var(--media-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Fiscal</span>
+                            <span class="priority-badge badge-media">Média</span>
+                        </div>
+                        <div class="card-title">Conferência Notas Fiscais Empresa PQR</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%; background-color: var(--media-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">AS</div>
+                                <span>Amanda S.</span>
+                            </div>
+                            <span>Prazo: 4 dias</span>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="9" data-prioridade="media" data-departamento="dp">
+                        <div class="card-indicator" style="background-color: var(--media-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">DP</span>
+                            <span class="priority-badge badge-media">Média</span>
+                        </div>
+                        <div class="card-title">Férias Coletivas Empresa STU</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%; background-color: var(--media-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <div class="card-assigned">
+                                <div class="card-avatar">RO</div>
+                                <span>Ricardo O.</span>
+                            </div>
+                            <span>Prazo: 5 dias</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna: Concluído -->
+            <div class="kanban-column baixa">
+                <div class="column-header">
+                    <h4><i class="fas fa-calendar-alt"></i> BAIXA</h4>
+                    <div class="column-count">3</div>
+                </div>
+                <div class="kanban-cards scrollbar-style">
+                    <div class="kanban-card" data-id="10" data-prioridade="baixa" data-departamento="contabil">
+                        <div class="card-indicator" style="background-color: var(--baixa-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Contábil</span>
+                            <span class="priority-badge badge-baixa">Baixa</span>
+                        </div>
+                        <div class="card-title">Cadastro Cliente Novo Empresa QRT</div>
+                        <div class="progress-bar">

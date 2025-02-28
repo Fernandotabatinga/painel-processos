@@ -5,65 +5,280 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAINEL DE PROCESSOS ITLCONTABILIDADE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style3.css">
+    <script type="module" defer src="script2.js"></script>
 </head>
 <body>
+    <div class="main-container">
+        <!-- Header com logo e título -->
+        <div class="header d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="19.png" alt="Logo ITLContabilidade" class="logo-img">
+                <h2 class="m-0">PAINEL DE PROCESSOS</h2>
+            </div>
+            <div class="d-flex">
+                <button class="btn btn-outline-light me-2" onclick="abrirModal('sites-modal')">
+                    <i class="fas fa-link"></i> Links Úteis
+                </button>
+                <button class="btn btn-primary me-2" onclick="abrirModal('modal-solicitacao')">
+                    <i class="fas fa-plus"></i> Nova Solicitação
+                </button>
+                <div class="dropdown">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="filtroDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="filtroDropdown">
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('todos')">Todos os processos</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('Contábil')">Departamento Contábil</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('Fiscal')">Departamento Fiscal</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('Pessoal')">Departamento Pessoal</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('todas')">Todas as prioridades</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('urgente')">Urgente</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('alta')">Alta</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('media')">Média</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('baixa')">Baixa</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-<div class="container-fluid p-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="text-center flex-grow-1">PAINEL DE PROCESSOS ITLCONTABILIDADE</h2>
-        <button class="btn btn-primary" onclick="window.location.href='solicitacao.html'">+ Registrar Solicitação</button>
+        <!-- Barra de widgets e indicadores -->
+        <div class="widgets-bar">
+            <div class="widget" id="hora-data">
+                <i class="fas fa-calendar-alt"></i> Carregando data...
+            </div>
+            <div class="widget" id="clima">
+                <i class="fas fa-cloud-sun"></i> Teresina-PI, carregando...
+            </div>
+            
+            <!-- Indicadores de performance -->
+            <div class="d-flex gap-2">
+                <div class="indicator" style="background-color: var(--urgente-color);">
+                    <div class="indicator-value" id="contador-urgente">0</div>
+                    <div class="indicator-label">URGENTES</div>
+                </div>
+                <div class="indicator" style="background-color: var(--alta-color);">
+                    <div class="indicator-value" id="contador-alta">0</div>
+                    <div class="indicator-label">ALTA</div>
+                </div>
+                <div class="indicator" style="background-color: var(--media-color);">
+                    <div class="indicator-value" id="contador-media">0</div>
+                    <div class="indicator-label">MÉDIA</div>
+                </div>
+                <div class="indicator" style="background-color: var(--baixa-color);">
+                    <div class="indicator-value" id="contador-baixa">0</div>
+                    <div class="indicator-label">BAIXA</div>
+                </div>
+                <div class="indicator" style="background-color: var(--concluido-color);">
+                    <div class="indicator-value" id="contador-concluido">0</div>
+                    <div class="indicator-label">CONCLUÍDOS</div>
+                </div>
+            </div>
+
+            <!-- Links rápidos -->
+            <div class="link-buttons">
+                <a href="https://www.hostgator.com.br/webmail" target="_blank" style="background-color: #0d6efd;">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+                <a href="https://itlcontabilidade.com" target="_blank" style="background-color: #198754;">
+                    <i class="fas fa-globe"></i> Site ITL
+                </a>
+                <a href="https://app.asana.com/" target="_blank" style="background-color: #fd7e14;">
+                    <i class="fas fa-tasks"></i> Asana
+                </a>
+                <a href="https://web.whatsapp.com/" target="_blank" style="background-color: #20c997;">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <!-- Status e progresso do dia -->
+        <div class="status-widget">
+            <div class="d-flex flex-column">
+                <span><strong>Solicitações Hoje:</strong> <span id="solicitacoes-hoje">12</span></span>
+                <div class="progress-bar" style="width: 150px;">
+                    <div class="progress-fill" style="width: 60%;"></div>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <span><strong>Concluídas Hoje:</strong> <span id="concluidas-hoje">5</span></span>
+                <div class="progress-bar" style="width: 150px;">
+                    <div class="progress-fill" style="width: 40%;"></div>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <span><strong>Tempo Médio Resolução:</strong> <span id="tempo-medio">1.5 dias</span></span>
+                <div class="progress-bar" style="width: 150px;">
+                    <div class="progress-fill" style="width: 70%;"></div>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <span><strong>Equipe mais ativa:</strong> <span id="equipe-ativa">Contábil</span></span>
+                <div class="progress-bar" style="width: 150px;">
+                    <div class="progress-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quadro Kanban -->
+        <div class="kanban-container">
+            <!-- Coluna: A Fazer -->
+            <div class="kanban-column urgente">
+                <div class="column-header">
+                    <h4><i class="fas fa-fire"></i> URGENTE</h4>
+                    <div class="column-count" id="urgente-count">0</div>
+                </div>
+                <div class="kanban-cards scrollbar-style" id="coluna-urgente">
+                    <!-- Cards serão preenchidos dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Coluna: Em Progresso -->
+            <div class="kanban-column alta">
+                <div class="column-header">
+                    <h4><i class="fas fa-exclamation-triangle"></i> ALTA</h4>
+                    <div class="column-count" id="alta-count">0</div>
+                </div>
+                <div class="kanban-cards scrollbar-style" id="coluna-alta">
+                    <!-- Cards serão preenchidos dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Coluna: Em Revisão -->
+            <div class="kanban-column media">
+                <div class="column-header">
+                    <h4><i class="fas fa-hourglass-half"></i> MÉDIA</h4>
+                    <div class="column-count" id="media-count">0</div>
+                </div>
+                <div class="kanban-cards scrollbar-style" id="coluna-media">
+                    <!-- Cards serão preenchidos dinamicamente -->
+                </div>
+            </div>
+            <!-- Coluna: Baixa -->
+            <div class="kanban-column baixa">
+                <div class="column-header">
+                    <h4><i class="fas fa-low-vision"></i> BAIXA</h4>
+                    <div class="column-count" id="baixa-count">0</div>
+                </div>
+                <div class="kanban-cards scrollbar-style" id="coluna-baixa">
+                    <!-- Cards serão preenchidos dinamicamente -->
+                </div>
+            </div>
+            <!-- Coluna: Concluído -->
+            <div class="kanban-column concluido">
+                <div class="column-header d-flex justify-content-between align-items-center">
+                    <h4><i class="fas fa-check-circle"></i> CONCLUÍDO <button class="btn btn-sm btn-outline-danger ms-2" onclick="limparConcluidos()">Limpar</button></h4>
+                    <div class="column-count" id="concluido-count">0</div>
+                </div>
+                <div class="kanban-cards scrollbar-style" id="coluna-concluido">
+                    <!-- Cards serão preenchidos dinamicamente -->
+                </div>
+            </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <p class="m-0">© 2025 ITLContabilidade - Sistema de Gerenciamento de Processos</p>
+    </div>
+    <!-- Modal para Nova Solicitação -->
+    <div id="modal-solicitacao" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="fecharModal('modal-solicitacao')">&times;</span>
+            <h4>Nova Solicitação</h4>
+            <form id="form-nova-solicitacao" onsubmit="adicionarNovaSolicitacao(event)">
+                <div class="form-group">
+                    <label for="titulo">Título da Solicitação</label>
+                    <input type="text" id="titulo" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="prioridade">Prioridade</label>
+                    <select id="prioridade" class="form-control" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="urgente">Urgente</option>
+                        <option value="alta">Alta</option>
+                        <option value="media">Média</option>
+                        <option value="baixa">Baixa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="responsavel">Responsável</label>
+                    <select id="responsavel" class="form-control" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="Isadora T.">Isadora T.</option>
+                        <option value="F. Neto">F. Neto</option>
+                        <option value="Tiago">Tiago</option>
+                        <option value="Fernando T.">Fernando T.</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="departamento">Departamento</label>
+                    <select id="departamento" class="form-control">
+                        <option value="">Selecione um departamento</option>
+                        <option value="Contábil">Contábil</option>
+                        <option value="Fiscal">Fiscal</option>
+                        <option value="Pessoal">Pessoal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prazo">Prazo</label>
+                    <input type="date" id="prazo" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" class="form-control" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Adicionar Solicitação</button>
+            </form>
+        </div>
     </div>
 
-    <div class="widgets d-flex justify-content-between mb-4">
-        <div id="hora-data" class="widget"></div>
-        <div id="clima" class="widget"></div>
-        <div class="widget">
-            <a href="SEU-LINK-AQUI" class="btn btn-secondary">📧 Email</a>
-            <a href="SEU-LINK-AQUI" class="btn btn-secondary">🌍 Site ITL</a>
-            <a href="SEU-LINK-AQUI" class="btn btn-secondary">📋 Asana</a>
-            <a href="SEU-LINK-AQUI" class="btn btn-secondary">📱 WhatsApp</a>
+    <!-- Modal para Links Úteis -->
+    <div id="sites-modal" class="modal sites-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="fecharModal('sites-modal')">&times;</span>
+            <h4>Links Úteis</h4>
+            <div class="sites-grid">
+                <a href="https://siare.fazenda.mg.gov.br/" target="_blank" class="site-link">
+                    <i class="fas fa-file-invoice-dollar fa-2x mb-2"></i>
+                    <div>SIARE/MG</div>
+                </a>
+                <a href="https://www8.receita.fazenda.gov.br/SimplesNacional/" target="_blank" class="site-link">
+                    <i class="fas fa-chart-pie fa-2x mb-2"></i>
+                    <div>Simples Nacional</div>
+                </a>
+                <a href="https://cav.receita.fazenda.gov.br/" target="_blank" class="site-link">
+                    <i class="fas fa-university fa-2x mb-2"></i>
+                    <div>Portal e-CAC</div>
+                </a>
+                <a href="https://consulta-crf.caixa.gov.br/" target="_blank" class="site-link">
+                    <i class="fas fa-building fa-2x mb-2"></i>
+                    <div>Certidão FGTS</div>
+                </a>
+                <a href="https://www.gov.br/pt-br/servicos/emitir-certidao-de-regularidade-fiscal" target="_blank" class="site-link">
+                    <i class="fas fa-file-alt fa-2x mb-2"></i>
+                    <div>Certidão Federal</div>
+                </a>
+                <a href="https://consultacnpj.com/" target="_blank" class="site-link">
+                    <i class="fas fa-search fa-2x mb-2"></i>
+                    <div>Consulta CNPJ</div>
+                </a>
+                <a href="https://www.gov.br/receitafederal" target="_blank" class="site-link">
+                    <i class="fas fa-landmark fa-2x mb-2"></i>
+                    <div>Receita Federal</div>
+                </a>
+                <a href="https://www.gov.br/esocial/" target="_blank" class="site-link">
+                    <i class="fas fa-users fa-2x mb-2"></i>
+                    <div>e-Social</div>
+                </a>
+                <a href="https://www.gov.br/conectagov-apps/pt-br/app-conectagov" target="_blank" class="site-link">
+                    <i class="fas fa-mobile-alt fa-2x mb-2"></i>
+                    <div>Gov.br</div>
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="legenda mb-3">
-        <strong>Legenda:</strong> As solicitações estão organizadas por nível de urgência. Clique no "❌" para remover uma solicitação concluída.
-    </div>
-
-    <div class="tabela-processos">
-        <div class="coluna">
-            <h4 class="urgente">🔥 Urgente</h4>
-            <div id="urgente" class="box"></div>
-        </div>
-        <div class="coluna">
-            <h4 class="alta">⚠️ Alta</h4>
-            <div id="alta" class="box"></div>
-        </div>
-        <div class="coluna">
-            <h4 class="media">⏳ Média</h4>
-            <div id="media" class="box"></div>
-        </div>
-        <div class="coluna">
-            <h4 class="pode-esperar">📅 Pode Esperar</h4>
-            <div id="pode-esperar" class="box"></div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function atualizarHoraData() {
-        const agora = new Date();
-        document.getElementById("hora-data").innerText = `📅 ${agora.toLocaleDateString()} ⏰ ${agora.toLocaleTimeString()}`;
-    }
-    setInterval(atualizarHoraData, 1000);
-    atualizarHoraData();
-
-    async function obterClima() {
-        document.getElementById("clima").innerText = "🌤️ Clima não disponível";
-    }
-    obterClima();
-</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

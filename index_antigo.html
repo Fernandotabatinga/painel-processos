@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAINEL DE PROCESSOS ITLCONTABILIDADE</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-center flex-grow-1">PAINEL DE PROCESSOS ITLCONTABILIDADE</h2>
+        <button class="btn btn-primary" onclick="window.location.href='solicitacao.html'">+ Registrar Solicitação</button>
+    </div>
+
+    <div class="widgets d-flex justify-content-between mb-4">
+        <div id="hora-data" class="widget"></div>
+        <div id="clima" class="widget"></div>
+        <div class="widget">
+            <a href="SEU-LINK-AQUI" class="btn btn-secondary">📧 Email</a>
+            <a href="SEU-LINK-AQUI" class="btn btn-secondary">🌍 Site ITL</a>
+            <a href="SEU-LINK-AQUI" class="btn btn-secondary">📋 Asana</a>
+            <a href="SEU-LINK-AQUI" class="btn btn-secondary">📱 WhatsApp</a>
+        </div>
+    </div>
+
+    <div class="legenda mb-3">
+        <strong>Legenda:</strong> As solicitações estão organizadas por nível de urgência. Clique no "❌" para remover uma solicitação concluída.
+    </div>
+
+    <div class="tabela-processos">
+        <div class="coluna">
+            <h4 class="urgente">🔥 Urgente</h4>
+            <div id="urgente" class="box"></div>
+        </div>
+        <div class="coluna">
+            <h4 class="alta">⚠️ Alta</h4>
+            <div id="alta" class="box"></div>
+        </div>
+        <div class="coluna">
+            <h4 class="media">⏳ Média</h4>
+            <div id="media" class="box"></div>
+        </div>
+        <div class="coluna">
+            <h4 class="pode-esperar">📅 Pode Esperar</h4>
+            <div id="pode-esperar" class="box"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function atualizarHoraData() {
+        const agora = new Date();
+        document.getElementById("hora-data").innerText = `📅 ${agora.toLocaleDateString()} ⏰ ${agora.toLocaleTimeString()}`;
+    }
+    setInterval(atualizarHoraData, 1000);
+    atualizarHoraData();
+
+    async function obterClima() {
+        document.getElementById("clima").innerText = "🌤️ Clima não disponível";
+    }
+    obterClima();
+</script>
+
+</body>
+</html>

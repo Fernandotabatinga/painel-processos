@@ -6,15 +6,16 @@
     <title>PAINEL DE PROCESSOS ITLCONTABILIDADE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="script2.js" defer></script>
     <link rel="stylesheet" href="style3.css">
-    <script type="module" defer src="script2.js"></script>
+   
 </head>
 <body>
     <div class="main-container">
         <!-- Header com logo e título -->
         <div class="header d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
-                <img src="19.png" alt="Logo ITLContabilidade" class="logo-img">
+                <img src="/api/placeholder/200/50" alt="Logo ITLContabilidade" class="logo-img">
                 <h2 class="m-0">PAINEL DE PROCESSOS</h2>
             </div>
             <div class="d-flex">
@@ -30,9 +31,9 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="filtroDropdown">
                         <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('todos')">Todos os processos</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('Contábil')">Departamento Contábil</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('Fiscal')">Departamento Fiscal</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('Pessoal')">Departamento Pessoal</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('contabil')">Departamento Contábil</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('fiscal')">Departamento Fiscal</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorResponsavel('dp')">Departamento Pessoal</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('todas')">Todas as prioridades</a></li>
                         <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('urgente')">Urgente</a></li>
@@ -66,10 +67,6 @@
                 <div class="indicator" style="background-color: var(--media-color);">
                     <div class="indicator-value" id="contador-media">0</div>
                     <div class="indicator-label">MÉDIA</div>
-                </div>
-                <div class="indicator" style="background-color: var(--baixa-color);">
-                    <div class="indicator-value" id="contador-baixa">0</div>
-                    <div class="indicator-label">BAIXA</div>
                 </div>
                 <div class="indicator" style="background-color: var(--concluido-color);">
                     <div class="indicator-value" id="contador-concluido">0</div>
@@ -128,10 +125,68 @@
             <div class="kanban-column urgente">
                 <div class="column-header">
                     <h4><i class="fas fa-fire"></i> URGENTE</h4>
-                    <div class="column-count" id="urgente-count">0</div>
+                    <div class="column-count">3</div>
                 </div>
                 <div class="kanban-cards scrollbar-style" id="coluna-urgente">
-                    <!-- Cards serão preenchidos dinamicamente -->
+                    <div class="kanban-card" data-id="1" data-prioridade="urgente" data-departamento="contabil">
+                        <div class="card-indicator" style="background-color: var(--urgente-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Contábil</span>
+                            <span class="priority-badge badge-urgente">Urgente</span>
+                        </div>
+                        <div class="card-title">Conciliação Bancária Empresa ABC</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 20%; background-color: var(--urgente-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <span class="responsible-name">João M.</span>
+                            <span>Prazo: Hoje</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(1)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(1)"><i class="fas fa-check"></i> Concluir</button>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="2" data-prioridade="urgente" data-departamento="fiscal">
+                        <div class="card-indicator" style="background-color: var(--urgente-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Fiscal</span>
+                            <span class="priority-badge badge-urgente">Urgente</span>
+                        </div>
+                        <div class="card-title">Retificação DARF Empresa XYZ</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%; background-color: var(--urgente-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <span class="responsible-name">Ana M.</span>
+                            <span>Prazo: Hoje</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(2)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(2)"><i class="fas fa-check"></i> Concluir</button>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="3" data-prioridade="urgente" data-departamento="dp">
+                        <div class="card-indicator" style="background-color: var(--urgente-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">DP</span>
+                            <span class="priority-badge badge-urgente">Urgente</span>
+                        </div>
+                        <div class="card-title">Rescisão Funcionário Empresa 123</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 15%; background-color: var(--urgente-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <span class="responsible-name">Carlos P.</span>
+                            <span>Prazo: Hoje</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(3)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(3)"><i class="fas fa-check"></i> Concluir</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -139,10 +194,68 @@
             <div class="kanban-column alta">
                 <div class="column-header">
                     <h4><i class="fas fa-exclamation-triangle"></i> ALTA</h4>
-                    <div class="column-count" id="alta-count">0</div>
+                    <div class="column-count">3</div>
                 </div>
                 <div class="kanban-cards scrollbar-style" id="coluna-alta">
-                    <!-- Cards serão preenchidos dinamicamente -->
+                    <div class="kanban-card" data-id="4" data-prioridade="alta" data-departamento="contabil">
+                        <div class="card-indicator" style="background-color: var(--alta-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Contábil</span>
+                            <span class="priority-badge badge-alta">Alta</span>
+                        </div>
+                        <div class="card-title">Balancete Trimestral Empresa DEF</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 50%; background-color: var(--alta-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <span class="responsible-name">Roberto F.</span>
+                            <span>Prazo: Amanhã</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(4)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(4)"><i class="fas fa-check"></i> Concluir</button>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="5" data-prioridade="alta" data-departamento="fiscal">
+                        <div class="card-indicator" style="background-color: var(--alta-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Fiscal</span>
+                            <span class="priority-badge badge-alta">Alta</span>
+                        </div>
+                        <div class="card-title">Apuração ICMS Empresa GHI</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%; background-color: var(--alta-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <span class="responsible-name">Maria T.</span>
+                            <span>Prazo: Amanhã</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(5)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(5)"><i class="fas fa-check"></i> Concluir</button>
+                        </div>
+                    </div>
+
+                    <div class="kanban-card" data-id="6" data-prioridade="alta" data-departamento="dp">
+                        <div class="card-indicator" style="background-color: var(--alta-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">DP</span>
+                            <span class="priority-badge badge-alta">Alta</span>
+                        </div>
+                        <div class="card-title">Folha de Pagamento Empresa JKL</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%; background-color: var(--alta-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <span class="responsible-name">Lucia M.</span>
+                            <span>Prazo: Amanhã</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(6)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(6)"><i class="fas fa-check"></i> Concluir</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -150,17 +263,35 @@
             <div class="kanban-column media">
                 <div class="column-header">
                     <h4><i class="fas fa-hourglass-half"></i> MÉDIA</h4>
-                    <div class="column-count" id="media-count">0</div>
+                    <div class="column-count">3</div>
                 </div>
                 <div class="kanban-cards scrollbar-style" id="coluna-media">
-                    <!-- Cards serão preenchidos dinamicamente -->
+                    <div class="kanban-card" data-id="7" data-prioridade="media" data-departamento="contabil">
+                        <div class="card-indicator" style="background-color: var(--media-color);"></div>
+                        <div class="card-header">
+                            <span class="card-tag">Contábil</span>
+                            <span class="priority-badge badge-media">Média</span>
+                        </div>
+                        <div class="card-title">Relatório Gerencial Empresa MNO</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%; background-color: var(--media-color);"></div>
+                        </div>
+                        <div class="card-meta">
+                            <span class="responsible-name">Paulo S.</span>
+                            <span>Prazo: 3 dias</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="card-action action-delete" onclick="excluirCard(7)"><i class="fas fa-trash"></i> Excluir</button>
+                            <button class="card-action action-complete" onclick="concluirCard(7)"><i class="fas fa-check"></i> Concluir</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Coluna: Baixa -->
             <div class="kanban-column baixa">
                 <div class="column-header">
                     <h4><i class="fas fa-low-vision"></i> BAIXA</h4>
-                    <div class="column-count" id="baixa-count">0</div>
+                    <div class="column-count">0</div>
                 </div>
                 <div class="kanban-cards scrollbar-style" id="coluna-baixa">
                     <!-- Cards serão preenchidos dinamicamente -->
@@ -168,9 +299,9 @@
             </div>
             <!-- Coluna: Concluído -->
             <div class="kanban-column concluido">
-                <div class="column-header d-flex justify-content-between align-items-center">
-                    <h4><i class="fas fa-check-circle"></i> CONCLUÍDO <button class="btn btn-sm btn-outline-danger ms-2" onclick="limparConcluidos()">Limpar</button></h4>
-                    <div class="column-count" id="concluido-count">0</div>
+                <div class="column-header">
+                    <h4><i class="fas fa-check-circle"></i> CONCLUÍDO</h4>
+                    <div class="column-count">0</div>
                 </div>
                 <div class="kanban-cards scrollbar-style" id="coluna-concluido">
                     <!-- Cards serão preenchidos dinamicamente -->
@@ -215,9 +346,9 @@
                     <label for="departamento">Departamento</label>
                     <select id="departamento" class="form-control">
                         <option value="">Selecione um departamento</option>
-                        <option value="Contábil">Contábil</option>
-                        <option value="Fiscal">Fiscal</option>
-                        <option value="Pessoal">Pessoal</option>
+                        <option value="contabil">Contábil</option>
+                        <option value="fiscal">Fiscal</option>
+                        <option value="dp">Departamento Pessoal</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -280,5 +411,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        
+    </script>
 </body>
 </html>

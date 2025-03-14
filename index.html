@@ -39,6 +39,11 @@
                         <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('alta')">Alta</a></li>
                         <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('media')">Média</a></li>
                         <li><a class="dropdown-item" href="#" onclick="filtrarPorPrioridade('baixa')">Baixa</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorNome('Isadora T.')">Isadora T.</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorNome('F. Neto')">F. Neto</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorNome('Tiago')">Tiago</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filtrarPorNome('Fernando T.')">Fernando T.</a></li>
                     </ul>
                 </div>
             </div>
@@ -186,7 +191,7 @@
         <div class="modal-content">
             <span class="modal-close" onclick="fecharModal('modal-solicitacao')">&times;</span>
             <h4>Nova Solicitação</h4>
-            <form id="form-nova-solicitacao" onsubmit="adicionarNovaSolicitacao(event)">
+            <form id="form-nova-solicitacao" onsubmit="adicionarNovaSolicitacao(event)" autocomplete="off">
                 <div class="form-group">
                     <label for="titulo">Título da Solicitação</label>
                     <input type="text" id="titulo" class="form-control" required>

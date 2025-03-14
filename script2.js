@@ -246,6 +246,23 @@ window.filtrarPorPrioridade = function filtrarPorPrioridade(filtro) {
     });
 }
 
+// Função para filtrar por nome
+window.filtrarPorNome = function filtrarPorNome(filtro) {
+    const cards = document.querySelectorAll('.kanban-card');
+
+    cards.forEach(card => {
+        if (filtro === 'todas') {
+            card.style.display = 'block';
+        } else {
+            if (card.querySelector('.responsible-name').textContent === filtro) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        }
+    });
+}
+
 // Função para limpar todos os concluídos (inclusive do FireBase)
 window.limparConcluidos = function limparConcluidos() {
     if (confirm('Tem certeza que deseja excluir todas as solicitações concluídas?')) {

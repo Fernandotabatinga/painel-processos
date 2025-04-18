@@ -9,6 +9,10 @@ import {
     onSnapshot
 } from "./firebase-config.js";
 
+window.filtroResponsavel = 'todos';
+window.filtroPrioridade = 'todas';
+window.filtroNome = 'todos';
+
 async function testarConexaoFirebase() {
     try {
         const querySnapshot = await getDocs(collection(db, "solicitacoes"));
@@ -34,6 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarContadores();
     });
 });
+
+window.onload = function () {
+    atualizarEstiloFiltro('responsavel', window.filtroResponsavel);
+    atualizarEstiloFiltro('prioridade', window.filtroPrioridade);
+    atualizarEstiloFiltro('nome', window.filtroNome);
+};
+
 
 // Atualizar hora e data
 function atualizarHoraData() {
@@ -101,6 +112,7 @@ window.adicionarNovaSolicitacao = async function adicionarNovaSolicitacao(event)
 
     fecharModal('modal-solicitacao');
     document.getElementById('form-nova-solicitacao').reset();
+    aplicarFiltros();
 }
 
 // Cria a estrutura HTML do card a partir dos dados do Firebase
@@ -144,6 +156,7 @@ function criarCardHTML(id, dados) {
     `;
 
     document.getElementById(colunaId).appendChild(card);
+    aplicarFiltros();
 }
 
 // Excluir card do Firebase
@@ -155,6 +168,7 @@ window.excluirCard = async function excluirCard(id) {
             console.error("Erro ao excluir solicitação:", error);
         }
     }
+    aplicarFiltros();
 }
 
 // Concluir card (atualizar no Firebase)
@@ -167,6 +181,7 @@ window.concluirCard = async function concluirCard(id) {
     } catch (error) {
         console.error("Erro ao concluir solicitação:", error);
     }
+    aplicarFiltros();
 }
 
 // Atualizar contadores (com base no quadro atual)
@@ -212,56 +227,128 @@ function limparQuadroKanban() {
 }
 
 // Função para filtrar por responsável
-window.filtrarPorResponsavel = function filtrarPorResponsavel(filtro) {
-    const cards = document.querySelectorAll('.kanban-card');
+// window.filtrarPorResponsavel = function filtrarPorResponsavel(filtro) {
+//     const cards = document.querySelectorAll('.kanban-card');
 
-    if (filtro === 'todos') {
-        cards.forEach(card => card.style.display = 'block');
-    } else {
-        cards.forEach(card => {
-            const departamento = card.dataset.departamento;
-            if (departamento === filtro) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-}
+//     if (filtro === 'todos') {
+//         cards.forEach(card => card.style.display = 'block');
+//     } else {
+//         cards.forEach(card => {
+//             const departamento = card.dataset.departamento;
+//             if (departamento === filtro) {
+//                 card.style.display = 'block';
+//             } else {
+//                 card.style.display = 'none';
+//             }
+//         });
+//     }
+// }
 
 // Função para filtrar por prioridade
-window.filtrarPorPrioridade = function filtrarPorPrioridade(filtro) {
-    const cards = document.querySelectorAll('.kanban-card');
+// window.filtrarPorPrioridade = function filtrarPorPrioridade(filtro) {
+//     const cards = document.querySelectorAll('.kanban-card');
     
-    cards.forEach(card => {
-        if (filtro === 'todas') {
-            card.style.display = 'block';
-        } else {
-            if (card.dataset.prioridade === filtro) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
+//     cards.forEach(card => {
+//         if (filtro === 'todas') {
+//             card.style.display = 'block';
+//         } else {
+//             if (card.dataset.prioridade === filtro) {
+//                 card.style.display = 'block';
+//             } else {
+//                 card.style.display = 'none';
+//             }
+//         }
+//     });
+// }
+
+// // Função para filtrar por nome
+// window.filtrarPorNome = function filtrarPorNome(filtro) {
+//     const cards = document.querySelectorAll('.kanban-card');
+
+//     cards.forEach(card => {
+//         if (filtro === 'todos') {
+//             card.style.display = 'block';
+//         } else {
+//             if (card.querySelector('.responsible-name').textContent === filtro) {
+//                 card.style.display = 'block';
+//             } else {
+//                 card.style.display = 'none';
+//             }
+//         }
+//     });
+// }
+
+window.filtrarPorResponsavel = function filtrarPorResponsavel(responsavel) {
+    window.filtroResponsavel = responsavel;
+    aplicarFiltros();
+    atualizarEstiloFiltro('responsavel', responsavel);
+}
+
+window.filtrarPorPrioridade = function filtrarPorPrioridade(prioridade) {
+    window.filtroPrioridade = prioridade;
+    aplicarFiltros();
+    atualizarEstiloFiltro('prioridade', prioridade);
+}
+
+window.filtrarPorNome = function filtrarPorNome(nome) {
+    window.filtroNome = nome;
+    aplicarFiltros();
+    atualizarEstiloFiltro('nome', nome);
+}
+
+function aplicarFiltros() {
+    const todosCards = document.querySelectorAll('.kanban-card');
+
+    console.log('Responsável:', window.filtroResponsavel);
+    console.log('Prioridade:', window.filtroPrioridade);    
+    console.log('Nome:', window.filtroNome);
+
+    todosCards.forEach(card => {
+        let mostrar = true;
+
+        // Filtro por responsável
+        if (window.filtroResponsavel !== 'todos' && card.dataset.departamento !== window.filtroResponsavel) {
+            mostrar = false;
+        }
+
+        // Filtro por prioridade
+        if (window.filtroPrioridade !== 'todas' && card.dataset.prioridade !== window.filtroPrioridade) {
+            mostrar = false;
+        }
+
+        // Filtro por nome
+        if (window.filtroNome !== 'todos' && card.querySelector('.responsible-name').textContent !== window.filtroNome) {
+            mostrar = false;
+        }
+
+        card.style.display = mostrar ? 'block' : 'none';
+    });
+}
+
+function atualizarEstiloFiltro(tipo, valorSelecionado) {
+    let seletorBase = '';
+    if (tipo === 'responsavel') {
+        seletorBase = "[onclick^=\"filtrarPorResponsavel\"]";
+    } else if (tipo === 'prioridade') {
+        seletorBase = "[onclick^=\"filtrarPorPrioridade\"]";
+    } else if (tipo === 'nome') {
+        seletorBase = "[onclick^=\"filtrarPorNome\"]";
+    }
+
+    const itens = document.querySelectorAll(`.dropdown-menu ${seletorBase}`);
+
+    console.log(itens);
+
+    itens.forEach(item => {
+        item.classList.remove('ativo');
+        if (item.getAttribute('onclick').includes(`('${valorSelecionado}')`)) {
+            item.classList.add('ativo');
         }
     });
 }
 
-// Função para filtrar por nome
-window.filtrarPorNome = function filtrarPorNome(filtro) {
-    const cards = document.querySelectorAll('.kanban-card');
 
-    cards.forEach(card => {
-        if (filtro === 'todas') {
-            card.style.display = 'block';
-        } else {
-            if (card.querySelector('.responsible-name').textContent === filtro) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        }
-    });
-}
+
 
 // Função para limpar todos os concluídos (inclusive do FireBase)
 window.limparConcluidos = function limparConcluidos() {
@@ -273,6 +360,7 @@ window.limparConcluidos = function limparConcluidos() {
         }
         );
     }
+    aplicarFiltros();
 }
 
 

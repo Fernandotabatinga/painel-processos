@@ -633,3 +633,8 @@ html, body {
         padding: 15px;
     }
 }
+
+.dropdown-item.ativo {
+    background-color: #0d6efd; /* azul bootstrap */
+    color: white;
+}
